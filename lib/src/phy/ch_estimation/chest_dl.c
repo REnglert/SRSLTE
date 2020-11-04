@@ -275,6 +275,8 @@ int srslte_chest_dl_set_mbsfn_area_id(srslte_chest_dl_t* q, uint16_t mbsfn_area_
 
 int srslte_chest_dl_set_cell(srslte_chest_dl_t* q, srslte_cell_t cell)
 {
+  printf("FLAG1\n");
+  
   int ret = SRSLTE_ERROR_INVALID_INPUTS;
   if (q != NULL && srslte_cell_isvalid(&cell)) {
     if (q->cell.id != cell.id || q->cell.nof_prb == 0) {
@@ -746,6 +748,7 @@ static int estimate_port(srslte_chest_dl_t*     q,
 
   /* FLAG : Bruce Code Here */
   printf("Time: [%d]\n", sf->tti);
+  printf("TESTING:\n"); 
   
   // Estimate synchronization error
   if (cfg->sync_error_enable) {
