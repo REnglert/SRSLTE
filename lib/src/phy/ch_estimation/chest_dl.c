@@ -275,7 +275,6 @@ int srslte_chest_dl_set_mbsfn_area_id(srslte_chest_dl_t* q, uint16_t mbsfn_area_
 
 int srslte_chest_dl_set_cell(srslte_chest_dl_t* q, srslte_cell_t cell)
 {
-  printf("FLAG1\n");
   
   int ret = SRSLTE_ERROR_INVALID_INPUTS;
   if (q != NULL && srslte_cell_isvalid(&cell)) {
@@ -748,7 +747,18 @@ static int estimate_port(srslte_chest_dl_t*     q,
 
   /* FLAG : Bruce Code Here */
   printf("Time: [%d]\n", sf->tti);
-  printf("TESTING:\n"); 
+  printf("npilots: [%d]\n", npilots);
+  printf("pilot estimates: %g + %g i \n", creal(q->pilot_estimates[0]), cimag(q->pilot_estimates[0])); 
+  printf("cell specific reference: %g + %g i\n", creal(q->csr_refs.pilots[port_id / 2][sf->tti % 10][1]), cimag(q->csr_refs.pilots[port_id / 2][sf->tti % 10][1]));
+
+  uint32_t n_symb = SRSLTE_CP_NSYMB(q->cell.cp) * SRSLTE_NOF_SLOTS_PER_SF;
+  uint32_t n_refs = SRSLTE_NRE * q->cell.nof_prb;
+  printf("n symbols [%d]\n", n_symb);
+  printf("n refs [%d]\n", n_refs);
+
+  int size = sizeof(q->csr_refs.pilots[port_id / 2][sf->tti % 10]) / sizeof(q->csr_refs.pilots[port_id / 2][sf->tti % 10][0]);
+  printf("size csr [%d]\n", size); 
+
   
   // Estimate synchronization error
   if (cfg->sync_error_enable) {
