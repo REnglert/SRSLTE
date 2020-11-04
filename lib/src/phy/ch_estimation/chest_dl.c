@@ -744,6 +744,9 @@ static int estimate_port(srslte_chest_dl_t*     q,
   srslte_vec_prod_conj_ccc(
       q->pilot_recv_signal, q->csr_refs.pilots[port_id / 2][sf->tti % 10], q->pilot_estimates, npilots);
 
+  /* FLAG : Bruce Code Here */
+  printf("Time: [%d]\n", sf->tti);
+  
   // Estimate synchronization error
   if (cfg->sync_error_enable) {
     uint32_t nsymb = srslte_refsignal_cs_nof_symbols(&q->csr_refs, sf, port_id);
