@@ -746,19 +746,21 @@ static int estimate_port(srslte_chest_dl_t*     q,
       q->pilot_recv_signal, q->csr_refs.pilots[port_id / 2][sf->tti % 10], q->pilot_estimates, npilots);
 
   /* FLAG : Bruce Code Here */
-  printf("Time: [%d]\n", sf->tti);
+  printf("Tran Time Int: [%d]\n", sf->tti);
+  //  printf("Subframe: [%d]\n", sf->tti %10); 
   printf("npilots: [%d]\n", npilots);
-  //  printf("pilot estimates: %g + %g i \n", creal(q->pilot_estimates[0]), cimag(q->pilot_estimates[0])); 
+  printf("rxant id: [%d]\n", rxant_id); 
+  printf("pilot estimates: %g + %g i \n", creal(q->pilot_estimates[0]), cimag(q->pilot_estimates[0])); 
   printf("cell specific reference: %g + %g i\n", creal(q->csr_refs.pilots[port_id / 2][sf->tti % 10][1]), cimag(q->csr_refs.pilots[port_id / 2][sf->tti % 10][1]));
-
+  /*
   uint32_t n_symb = SRSLTE_CP_NSYMB(q->cell.cp) * SRSLTE_NOF_SLOTS_PER_SF;
   uint32_t n_refs = SRSLTE_NRE * q->cell.nof_prb;
   printf("n symbols [%d]\n", n_symb);
   printf("n refs [%d]\n", n_refs);
-
+  */
   for(int i = 0; i < npilots; i++){
     //    printf("pilot estimates: %g + %g i \n", creal(q->pilot_estimates[i]), cimag(q->pilot_estimates[i]));
-      printf("cell specific reference: %g + %g i\n", creal(q->csr_refs.pilots[port_id / 2][sf->tti % 10][i]), cimag(q->csr_refs.pilots[port_id / 2][sf->tti % 10][i]));
+    //  printf("cell specific reference: %g + %g i\n", creal(q->csr_refs.pilots[port_id / 2][sf->tti % 10][i]), cimag(q->csr_refs.pilots[port_id / 2][sf->tti % 10][i]));
 
   }
   
@@ -818,6 +820,8 @@ static int estimate_port_mbsfn(srslte_chest_dl_t*     q,
   uint32_t sf_idx        = sf->tti % 10;
   uint16_t mbsfn_area_id = cfg->mbsfn_area_id;
 
+  printf("SUBFRAME %d\n\n", sf_idx); 
+  
   if (!q->mbsfn_refs[mbsfn_area_id]) {
     ERROR("Error in chest_dl: MBSFN area id=%d not initialized\n", cfg->mbsfn_area_id);
   }
